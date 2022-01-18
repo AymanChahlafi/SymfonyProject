@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-3 mb-4" style="color: #fff">Products</h1>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="https://via.placeholder.com/200x150" alt="{{ product.name }}" class="card-img-top">
+                        <div class="card-body">
+                            <span class="h4 mt-auto text-right text-danger">{{ product.price }} €</span>
+                            <h5 class="card-title">
+                            {{ product.name|u.truncate(30, '...')}}
+                            </h5>
+                            {# <p class="card-text">{{ product.description }}</p> #}
+                            <div class="d-flex justify-content-between align-item-center mr-1">
+                                <a href="{{ path('product.detail', {id: product.id}) }}" class="btn btn-dark">View Details</a>
+                                <a href="{{ path('cart.add', {id: product.id}) }}" class="btn btn-danger">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

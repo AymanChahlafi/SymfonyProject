@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 style="color: #fff;">Your Cart</h1>
+        {% if items | length > 0 %}
+            <div class="row mt-4">
+                <!-- List of items -->
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-blue text-white d-flex" style="background: #166d9a;">
+                            <h5>Items</h5>
+                        </div>
+
+                        <div class="container">
+                            {% for item in items %}
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-8"></div>
+                                <div class="col-sm-2 text-right"><b>Total:</b></div>
+                                <div class="col-sm-2 text-right"><b>{{ item.quantity * item.product.price }} $</b></div>
+                            </div>  
+                            <div class="row">
+                                <div class="col-sm-12"><h5>{{ item.product.name }}</h5></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img  src="https://via.placeholder.com/200x150" width="80" height="80" alt="Product image">
+                                </div>
+                                <div class="col-sm-8">
+                                    <small>{{ item.product.description[:150] }}...</small>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a href="{{ path('cart.remove', {'id': item.product.id}) }}"class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-6">
+                                    <b class="col-sm-12">Quantity:</b>
+                                    <small class="col-sm-12" style="font-size:16px;">{{ item.quantity }}</small>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <hr/>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Summary -->
+                <div class="col-md-4">
+                    <div class="card mt-4 mt-md-0">
+                        <h5 class="card-header bg-blue text-white"style="background: #166d9a;">Summary</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div><b>Total</b></div>
+                                <span><b>{{ total }} $</b></span>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="{{ path('checkout') }}" class="btn btn-danger w-100">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Your cart is empty. Go to the <a href="{{ path('home') }}">product list</a>.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
